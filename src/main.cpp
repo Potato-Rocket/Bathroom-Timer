@@ -11,12 +11,16 @@ volatile int Time=10000;
 void setTime();
 
 void setup(){
-  pinMode(2, INPUT);
-  pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
+  pinMode(12, INPUT_PULLUP);
+  pinMode(11, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
 
 
-  attachInterrupt(digitalPinToInterrupt(2), setTime, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(9), setTime, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(10), setTime, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(11), setTime, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(12), setTime, CHANGE);
   byte numDigits = 4;   
   byte digitPins[] = {1,4,5,8+6}; //Digits: 1,2,3,4 <--put one resistor (ex: 220 Ohms, or 330 Ohms, etc, on each digit pin)
   byte segmentPins[] = {2,6,8+4,8+2,8+1,3,8+5,8+3}; //Segments: A,B,C,D,E,F,G,Period
@@ -43,10 +47,4 @@ void loop() {
 }
 void setTime(){
   Time=10000;
-  if (analogRead(A0)!=LOW){
-    Time=20000;
-  }
-  if (analogRead(A1)!=LOW){
-    Time=30000;
-  }
 }
